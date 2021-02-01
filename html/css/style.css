@@ -11,6 +11,10 @@ body, html {
 	text-align: center;
 }
 
+#content {
+	margin-top: 80px;
+}
+
 h1 {
 	font-size: 11px;
 	font-weight: normal;

@@ -7,6 +7,8 @@ window.vSettings = {
 
 core.init();
 
+utils.loadModule('components/feedback.html','feedback');
+
 (async () => {
 	window.wsbData = await utils.loadJSON('./../wsbdata.json');
 })();

@@ -52,7 +52,7 @@
 		font-size: 32px;
 		margin-right: 20px;
 		text-align: center;
-		color: #F00;
+		color: #F7F7F7;
 		float: left;
 	}
 	.mentions {
@@ -60,8 +60,14 @@
 		font-size: 13px;
 		text-align: center;
 	}
-	.tick-price {
-		color: #4F4;
+	.tick-price, .tick-change {
+		color: #F7F7F7;
+	}
+	.green {
+		color: #0F0;
+	}
+	.red {
+		color: #F00;
 	}
 	.post-container {
 		position: relative;
@@ -145,14 +151,6 @@
 
 </style>
 
-<section id="introduction">
-	<div class="container">
-		<h1>
-			Separating the signal from the noise on WallStreetBets
-		</h1>
-	</div>
-</section>
-
 <section id="ticker">
 	<div class="container">
 		<div class="scroll-left">
@@ -208,8 +206,15 @@
 		let rank = 0;
 		window.wsbData.keywords.forEach((kwObj) => {
 			rank += 1;
-			tickerHTML += `<div class="tick-container">${kwObj.sym}
-				<div class="mentions">Price. <span class="tick-price">$${kwObj.price}</span></div>
+			let greenRed = '';
+			let priceChangeText = '';
+			if (kwObj.priceChange) {
+				if (kwObj.priceChange > 0) greenRed = ' green';
+				if (kwObj.priceChange < 0) greenRed = ' red';
+				kwObj.priceChangeText = `${kwObj.priceChange.toFixed(1)}%`;
+			}
+			tickerHTML += `<div class="tick-container${greenRed}">${kwObj.sym}
+				<div class="mentions"><span class="tick-price${greenRed}">$${kwObj.price}</span> <span class="tick-change${greenRed}">${priceChangeText}</span></div>
 				<div class="mentions">Rank. 🏆${rank}</div>
 				<div class="mentions">Mentions. 📢${kwObj.mentions}</div>
 			</div>`;

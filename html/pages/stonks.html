@@ -39,14 +39,6 @@
 
 </style>
 
-<section id="introduction">
-	<div class="container">
-		<h1>
-			Separating the signal from the noise on WallStreetBets
-		</h1>
-	</div>
-</section>
-
 <section id="rankings">
 	<div class="container">
 		<div id="rank-table">
@@ -68,11 +60,11 @@
 	}
 
 	const loadData = () => {
-		let rankHTML = '<table class="table"><tr><th>RANK</th><th>STONK</th><th>MENTIONS</th><th>PRICE</th></tr>';
+		let rankHTML = '<table class="table"><tr><th>RANK</th><th>STONK</th><th>MENTIONS</th><th>PRICE</th><th>CHANGE</th></tr>';
 		let rank = 0;
 		window.wsbData.keywords.forEach((kwObj) => {
 			rank += 1;
-			rankHTML += `<tr><td>${rank}</td><td>${kwObj.sym}</td><td>${kwObj.mentions}</td><td>$${kwObj.price}</td></tr>`;
+			rankHTML += `<tr><td>${rank}</td><td>${kwObj.sym}</td><td>${kwObj.mentions}</td><td>$${kwObj.price}</td><td>${(kwObj.priceChange || 0).toFixed(1)}%</td></tr>`;
 		});
 		rankHTML += `</table>`;
 		document.getElementById('rank-table').innerHTML = rankHTML;

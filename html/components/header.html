@@ -77,6 +77,13 @@
 		margin: 10px 10px 0px 10px;
 	}
 
+	#introduction {
+		position: absolute;
+		top: 40px;
+		left: 0px;
+		right: 0px;
+	}
+
 	@media only screen and (max-width: 720px) {
 		#menu {
 			float: none;
@@ -128,7 +135,21 @@
 	</div>
 </div>
 
+<section id="introduction">
+	<div class="container">
+		<h1 id="intro-text">Separating the signal from the noise on WallStreetBets</h1>
+	</div>
+</section>
+
 <script>
+	const changeIntro = () => {
+		const existingText = document.getElementById('intro-text').innerHTML;
+		if (existingText === `Separating the signal from the noise on WallStreetBets`) {
+			document.getElementById('intro-text').innerHTML = `Subscribers: ${(window.wsbData.stats.subscribers/1000000).toFixed(2)}m &nbsp;&nbsp;&nbsp; Online: ${(window.wsbData.stats.active/1000000).toFixed(2)}m`;
+		} else {
+			document.getElementById('intro-text').innerHTML = `Separating the signal from the noise on WallStreetBets`;
+		}
+	}
 	const toggleMenu = () => {
 		const el = document.getElementById('menu');
 		if (el.classList.contains('hidden') || el.classList.contains('mobile-hidden')) {
@@ -143,4 +164,8 @@
 	document.querySelectorAll('.toggle-menu').forEach((el) => {
 		el.onclick = () => { toggleMenu(); };
 	});
+
+	setInterval(() => {
+		changeIntro();
+	},5000);
 </script>
