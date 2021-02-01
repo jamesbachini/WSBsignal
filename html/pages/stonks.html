@@ -1,0 +1,93 @@
+<style>
+	section {
+		border-bottom: 2px solid #333;
+	}
+
+	.table {
+		width: 100%;
+	}
+
+		
+	table.td, table.th {
+		padding: 5px;
+		text-align: center;
+	}
+
+	table  th {
+		padding: 1px;
+		font-weight: 400;
+		background: linear-gradient(180deg, rgb(180, 48, 59) 0%, rgba(94,6,6,1) 100%);
+		color: #F7F7F7;
+	}
+
+	table tr {
+		background: #DDD;
+	}
+
+	table tr:nth-child(even) {
+		background: #F7F7F7;
+	}
+
+	table td {
+		color: #222;
+		text-align: center;
+	}
+
+	@media only screen and (max-width: 720px) {
+		
+	}
+
+</style>
+
+<section id="introduction">
+	<div class="container">
+		<h1>
+			Separating the signal from the noise on WallStreetBets
+		</h1>
+	</div>
+</section>
+
+<section id="rankings">
+	<div class="container">
+		<div id="rank-table">
+		</div>
+	</div>
+</section>
+
+<section id="rank-explainer">
+	<div class="container">
+		<p>We search for possible stock mentions in new posts to /r/wallstreetbets and aggregate the data on a rolling 24 hour period. If the servers get reset for an update then data may show less than 24 hour data.</p>
+	</div>
+</section>
+
+<script>
+	const decodeHtml = (html) => {
+		const txt = document.createElement('textarea');
+		txt.innerHTML = html;
+		return txt.value;
+	}
+
+	const loadData = () => {
+		let rankHTML = '<table class="table"><tr><th>RANK</th><th>STONK</th><th>MENTIONS</th><th>PRICE</th></tr>';
+		let rank = 0;
+		window.wsbData.keywords.forEach((kwObj) => {
+			rank += 1;
+			rankHTML += `<tr><td>${rank}</td><td>${kwObj.sym}</td><td>${kwObj.mentions}</td><td>$${kwObj.price}</td></tr>`;
+		});
+		rankHTML += `</table>`;
+		document.getElementById('rank-table').innerHTML = rankHTML;
+	}
+
+	const checkLoaded = () => {
+		if (window.wsbData) {
+			loadData();
+		} else {
+			setTimeout(() => {
+				checkLoaded();
+			}, 100);
+		}
+	}
+
+	checkLoaded();
+
+</script>
