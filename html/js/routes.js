@@ -29,8 +29,8 @@ export const routes = {
 		} else {
 			// load home page if no page= variable specified in URL
 			await utils.loadModule('pages/home.html','content');
-			utils.setTitle(`${vSettings.brand}`);
-			utils.setDescription(`VanillaHTML is the best boilerplate template for websites and web development projects in ${new Date().getFullYear()}. Built with elegantly simple HTML/CSS/JS`);
+			utils.setTitle(`WSBsiganl | WallStreetBets Signal`);
+			utils.setDescription(`Separating the signal from the noise on WallStreetBets.`);
 		}
 		utils.scrollTo();
 		return true;

@@ -84,7 +84,19 @@
 		right: 0px;
 	}
 
+	.promoted-button {
+		color: #F7F7F7;
+		float: right;
+		text-decoration: none;
+		font-weight: bold;
+		margin-right: 10px;
+		display: none;
+	}
+
 	@media only screen and (max-width: 720px) {
+		.promoted-button {
+			display: block;
+		}
 		#menu {
 			float: none;
 			position: fixed;
@@ -121,14 +133,16 @@
 			<!-- Optional Code For Icon & Text Logo -->
 			<img src="img/logo.svg" class="logo-icon" alt="WSBSignal" title="WSBSignal" />
 			<div class="logo-text"><span class="logo-alt">WSB </span>signal</div>
+			
 		</a>
 		<img src="img/icons/burger.svg" id="burger" class="toggle-menu desktop-hidden" alt="Toggle Menu" title="Toggle Menu" />
+		<a href="https://med.etoro.com/B13056_A100775_TClick_SWSBSignal.aspx" title="Trade" target="_blank" class="promoted-button">TRADE</a>
 		<nav id="menu" class="menu mobile-hidden">
 			<img src="img/icons/close.svg" id="menu-close" class="toggle-menu desktop-hidden" alt="Close Menu" title="Close Menu" />
 			<ul>
 				<li><a href="?page=home">HOME</a></li>
 				<li><a href="?page=stonks">STONKS</a></li>
-				<li><a href="https://etoro.tw/3oy62Hy" title="Download HTML Boilerplate" target="_blank">TRADE</a></li>
+				<li><a href="https://med.etoro.com/B13056_A100775_TClick_SWSBSignal.aspx" title="Trade" target="_blank">TRADE</a></li>
 			</ul>
 		</nav>
 		<div class="clear"></div>

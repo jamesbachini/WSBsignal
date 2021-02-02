@@ -96,7 +96,7 @@ const getFinancials = async () => {
 				data.prices[kwObj.sym].push(kwObj.price);
 				if (data.prices[kwObj.sym].length > 6 * 24) data.prices[kwObj.sym].shift();
 				if (data.prices[kwObj.sym].length > 6 * 12) {
-					kwObj.priceChange = (kwObj.price - data.prices[kwObj.sym][0]) / data.prices[kwObj.sym][0];
+					kwObj.priceChange = ((kwObj.price - data.prices[kwObj.sym][0]) / data.prices[kwObj.sym][0]) * 100;
 				}
 				// there's a whole lot more info we could take if we want it
 			}

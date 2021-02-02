@@ -11,7 +11,7 @@
 	.scroll-left #tickers {
 		overflow: hidden;
 		position: absolute;
-		width: 1000px;
+		width: 1400px;
 		height: 100%;
 		margin: 0;
 		text-align: left;
@@ -62,6 +62,10 @@
 	}
 	.tick-price, .tick-change {
 		color: #F7F7F7;
+	}
+	.tick-change {
+		font-size: 12px;
+		font-weight: normal;
 	}
 	.green {
 		color: #0F0;
@@ -211,10 +215,10 @@
 			if (kwObj.priceChange) {
 				if (kwObj.priceChange > 0) greenRed = ' green';
 				if (kwObj.priceChange < 0) greenRed = ' red';
-				kwObj.priceChangeText = `${kwObj.priceChange.toFixed(1)}%`;
+				priceChangeText = `${kwObj.priceChange.toFixed(1)}%`;
 			}
 			tickerHTML += `<div class="tick-container${greenRed}">${kwObj.sym}
-				<div class="mentions"><span class="tick-price${greenRed}">$${kwObj.price}</span> <span class="tick-change${greenRed}">${priceChangeText}</span></div>
+				<div class="mentions"><span class="tick-price${greenRed}">$${kwObj.price.toFixed(2)}</span> <span class="tick-change${greenRed}">${priceChangeText}</span></div>
 				<div class="mentions">Rank. 🏆${rank}</div>
 				<div class="mentions">Mentions. 📢${kwObj.mentions}</div>
 			</div>`;
