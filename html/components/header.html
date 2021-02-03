@@ -141,6 +141,9 @@
 			<img src="img/icons/close.svg" id="menu-close" class="toggle-menu desktop-hidden" alt="Close Menu" title="Close Menu" />
 			<ul>
 				<li><a href="?page=home">HOME</a></li>
+				<li><a href="?page=smallstreetbets">SMALLSTREETBETS</a></li>
+				<li><a href="?page=investing">INVESTING</a></li>
+				<li><a href="?page=cryptocurrency">CRYPTOCURRENCY</a></li>
 				<li><a href="?page=stonks">STONKS</a></li>
 				<li><a href="https://med.etoro.com/B13056_A100775_TClick_SWSBSignal.aspx" title="Trade" target="_blank">TRADE</a></li>
 			</ul>
@@ -156,7 +159,7 @@
 </section>
 
 <script>
-	const changeIntro = () => {
+	window.changeIntro = () => {
 		const existingText = document.getElementById('intro-text').innerHTML;
 		if (existingText === `Separating the signal from the noise on WallStreetBets`) {
 			document.getElementById('intro-text').innerHTML = `Subscribers: ${(window.wsbData.stats.subscribers/1000000).toFixed(2)}m &nbsp;&nbsp;&nbsp; Online: ${(window.wsbData.stats.active/1000000).toFixed(2)}m`;

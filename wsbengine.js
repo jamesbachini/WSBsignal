@@ -10,6 +10,8 @@ let data = {
 	stats: {},
 };
 
+const altSubs = ['smallstreetbets','investing','cryptocurrency'];
+
 fs.readFile('./html/wsbbackup.json', 'utf-8', (err, content) => {
 	try {
 		data = JSON.parse(content);
@@ -130,6 +132,33 @@ const bestPosts = async () => {
 	});
 }
 
+const altPosts = async (subreddit) => {
+	const dat1 = await fetch(`https://www.reddit.com/r/${subreddit}/hot.json?limit=100`).catch(err => console.log(err));
+	const res1 = await dat1.json().catch(err => console.log(err));
+	res1.data.children.forEach((c) => {
+		const title = c.data.title;
+		const link = `https://www.reddit.com${c.data.permalink}`;
+		const text = c.data.selftext;
+		const html = c.data.selftext_html;
+		const author = c.data.author;
+		const ts = c.data.created_utc;
+		if (text && scorePost(c.data) > 50) {
+			console.log(title);
+			if (!data.alts)  data.alts = {};
+			if (!data.alts[subreddit])  data.alts[subreddit] = {};
+			data.alts[subreddit][c.data.id] = {
+				id: c.data.id,
+				title,
+				link,
+				text,
+				html,
+				author,
+				ts,
+			}
+		}
+	});
+}
+
 const scorePost = (p) => {
 	let score = 50;
 	const allText = p.title + ' ' + p.selftext;
@@ -151,12 +180,24 @@ const scorePost = (p) => {
 }
 
 const writeOut = async () => {
-	const finalPosts = {}
+	const finalPosts = {};
 	let fpCount = 0;
 	Object.keys(data.bestPosts).reverse().forEach((key) => {
 		fpCount += 1;
 		if (fpCount > 200) return false;
 		finalPosts[key] = data.bestPosts[key];
+	});
+
+
+	const finalAlts = {};
+	altSubs.forEach((sub) => {
+		let apCount = 0;
+		Object.keys(data.alts[sub]).reverse().forEach((key) => {
+			apCount += 1;
+			if (apCount > 100) return false;
+			if (!finalAlts[sub]) finalAlts[sub] = {};
+			finalAlts[sub][key] = data.alts[sub][key];
+		});
 	});
 
 	const finalKeywords = [];
@@ -172,6 +213,11 @@ const writeOut = async () => {
 	fs.writeFile(`./html/wsbdata.json`, JSON.stringify(finalData)+"\n", (err) => {
 		if (err) console.error(err)
 	});
+
+	fs.writeFile(`./html/altdata.json`, JSON.stringify(finalAlts)+"\n", (err) => {
+		if (err) console.error(err)
+	});
+
 	fs.writeFile(`./html/wsbbackup.json`, JSON.stringify(data)+"\n", (err) => {
 		if (err) console.error(err)
 	});
@@ -184,7 +230,12 @@ const run = async () => {
 	await formatKeywords();
 	await getFinancials();
 	await bestPosts();
-	await writeOut();
+	altSubs.forEach(async (sub) => {
+		await altPosts(sub);
+	});
+	setTimeout(async () => {
+		await writeOut();
+	}, 15000);
 };
 
 run();

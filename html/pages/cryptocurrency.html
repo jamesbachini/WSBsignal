@@ -1,0 +1,136 @@
+<style>
+	section {
+		border-bottom: 2px solid#333;
+	}
+
+	.post-container {
+		position: relative;
+		margin: 5px 5px 25px 5px;
+		background: #F7F7F7;
+		height: 300px;
+		overflow: hidden;
+		border-radius: 5px;
+	}
+	.post-title {
+		padding: 5px;
+		background: #333335;
+		color: #FFF;
+		font-weight: bold;
+		font-size: 18px;
+	}
+	.post-meta {
+		position: relative;
+		color: #AAA;
+		font-size: 16px;
+		height: 30px;
+		vertical-align: middle;
+		background: #444446;
+	}
+	.post-author {
+		position: absolute;
+		left: 40px;
+		top: 4px;
+	}
+	.avatar-icon {
+		height: 30px;
+		padding: 3px;
+		border: 2px solid #333;
+		border-radius: 50px;
+		background: #222;
+		margin-right: 10px;
+		position: absolute;
+		left: -7px;
+		top: -5px;
+	}
+	.post-date {
+		font-size: 14px;
+		position: absolute;
+		right: 3px;
+		top: 5px;
+	}
+	.post-body {
+		padding: 5px;
+		font-size: 14px;
+		color: #222;
+	}
+	.post-link {
+		padding: 3px;
+	}
+	.post-link a {
+		color: #222;
+		text-decoration: none;
+	}
+	.post-link a:hover {
+		font-weight: bold;
+	}
+	.post-expand {
+		position: absolute;
+		right: 0px;
+		bottom: 0px;
+		height: 20px;
+		width: 120px;
+		border-top-left-radius: 10px;
+		background: #111;
+		color: #F7F7F7;
+		padding: 5px;
+		text-align: center;
+	}
+	.post-expand a {
+		color: #F7F7F7;
+		text-decoration: none;
+	}
+	
+	@media only screen and (max-width: 720px) {
+		
+	}
+
+</style>
+
+<section id="timeline">
+	<div class="container">
+		<div id="feed">
+			Loading...
+		</div>
+	</div>
+</section>
+
+
+<script>
+
+	window.changeIntro = () => {
+		document.getElementById('intro-text').innerHTML = `Todays Best Posts From r/cryptocurrency`;
+	}
+	if (document.getElementById('intro-text')) document.getElementById('intro-text').innerHTML = `Todays Best Posts From r/cryptocurrency`;
+
+	const loadData = () => {
+		let postsHTML = '';
+		Object.keys(window.altData.cryptocurrency).forEach((key) => {
+			const p = window.altData.cryptocurrency[key];
+			postsHTML += `<div class="post-container" id="post-${p.id}">
+				<div class="post-title">${p.title}</div>
+				<div class="post-meta">
+					<img src="img/logo.svg" class="avatar-icon" alt="${p.author} avatar" title="${p.author} avatar" />
+					<div class="post-author">${p.author}</div>
+					<div class="post-date">${timeSince(p.ts * 1000)}</div>
+				</div>
+				<div class="post-body">${decodeHtml(p.html)}</div>
+				<div class="post-link"><a href="${p.link}" target="_blank">🔗 OPEN ON REDDIT</a></div>
+				<div class="post-expand"><a href="javascript:void(0)" onclick="document.getElementById('post-${p.id}').style.height='auto';">📰 READ</a></div>
+			</div>`;
+		});
+		document.getElementById('feed').innerHTML = postsHTML;
+	}
+
+	const checkLoaded = () => {
+		if (window.altData) {
+			loadData();
+		} else {
+			setTimeout(() => {
+				checkLoaded();
+			}, 100);
+		}
+	}
+
+	checkLoaded();
+
+</script>

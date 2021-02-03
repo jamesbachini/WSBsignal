@@ -20,6 +20,15 @@ export const routes = {
 				return pageContent.split('[brand]').join(vSettings.brand);
 			});
 			utils.setTitle(`${vSettings.brand} Privacy Policy`);
+		} else if (get.page && get.page === 'smallstreetbets') {
+			await utils.loadModule('pages/smallstreetbets.html','content');
+			utils.setTitle(`SmallStreetBets | Filtered News Feed`);
+		} else if (get.page && get.page === 'investing') {
+			await utils.loadModule('pages/investing.html','content');
+			utils.setTitle(`r/Investing | Todays Best Posts`);
+		} else if (get.page && get.page === 'cryptocurrency') {
+			await utils.loadModule('pages/cryptocurrency.html','content');
+			utils.setTitle(`r/Cryptocurrency | Signal Separated From Noise`);
 		} else if (get.page) {
 			// automatically catch any pages without dedicated routes
 			const cleanPage = utils.cleanString(get.page);
@@ -29,7 +38,7 @@ export const routes = {
 		} else {
 			// load home page if no page= variable specified in URL
 			await utils.loadModule('pages/home.html','content');
-			utils.setTitle(`WSBsiganl | WallStreetBets Signal`);
+			utils.setTitle(`WSBsignal | WallStreetBets Signal`);
 			utils.setDescription(`Separating the signal from the noise on WallStreetBets.`);
 		}
 		utils.scrollTo();
